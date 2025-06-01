@@ -83,6 +83,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       );
 
       if (compressedImage == null) return;
+      if (!mounted) return;
 
       setState(() {
         _base64Image = base64Encode(compressedImage);
@@ -175,18 +176,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       await fav.reference.update({'storeName': newStoreName});
     }
 
-//     final commentQuery = await FirebaseFirestore.instance
-//     .collectionGroup('comments')
-//     .where('uid', isEqualTo: uid)
-//     .get();
-
-// for (final comment in commentQuery.docs) {
-//   await comment.reference.update({
-//     'storeName': newStoreName,
-//     if (_base64Image != null) 'profileImage': _base64Image,
-//   });
-// }
-
 
     if (!mounted) return;
     Navigator.pop(context);
@@ -221,6 +210,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final latLng = LatLng(position.latitude, position.longitude);
     final placeDetails = await _getPlaceDetailsFromLatLng(latLng);
 
+    if (!mounted) return;
+
     setState(() {
       _location = LatLng(position.latitude, position.longitude);
       _district = placeDetails['district'];
@@ -237,8 +228,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
     );
 
+    if (!mounted) return;
+    
     if (result != null && result is LatLng) {
       final name = await _getPlaceDetailsFromLatLng(result);
+      if (!mounted) return;
       setState(() {
         _location = result;
         _city = name['city'];
@@ -447,19 +441,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               children: [
                 const Icon(Icons.location_on,),
                 const SizedBox(width: 8),
-                Padding(
-                  padding: const EdgeInsets.only(top: 14, bottom: 14),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (_locationName != null)
-                        Text(
-                          '$_locationName', style: TextStyle(
-                            fontSize: 15),
-                          ), 
-                        
-                    ],
-                      ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 14, bottom: 14),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (_locationName != null)
+                            Text(
+                              '$_locationName', style: TextStyle(
+                                fontSize: 15),
+                              ),     
+                        ],
+                          ),
+                  ),
                 )
               ],
             ),

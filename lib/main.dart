@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: themeProvider.currentTheme,
-          home: MainScreen(),
+          home: SplashScreen(),
           initialRoute: '/',
         routes: {
           '/mainscreen': (context) => const MainScreen(),

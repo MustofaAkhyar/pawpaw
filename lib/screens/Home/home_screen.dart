@@ -119,14 +119,15 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(10),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image(image: AssetImage("assets/banner_home.png", 
-                ),
-                  fit: BoxFit.cover, width: double.infinity, height: 200,
-                ),
+                child: Image.asset( Theme.of(context).brightness == Brightness.dark
+        ? 'assets/iklan_dark.jpeg'
+        : 'assets/iklan_light.jpeg', 
+        fit: BoxFit.cover,
+        ),
 
               ),
             ),
-            Padding(padding: const EdgeInsets.only(left: 10),
+            Padding(padding: const EdgeInsets.only(left: 10, top: 10, bottom: 5),
               child: Row(
                 children: [
                   Text('Pet Categories', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,
